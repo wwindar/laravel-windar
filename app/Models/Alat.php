@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alat extends Model
 {
-    //
+    protected $table = 'alats';
+    protected $fillable = ['nama_alat', 'tahun', 'merek', 'lokasi'];
 }
