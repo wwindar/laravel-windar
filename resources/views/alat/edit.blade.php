@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tambah Alat Medis - SIMRS</title>
+    <title>Edit Alat Medis - SIMRS</title>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +38,6 @@
             background-attachment: fixed;
         }
 
-        /* Centered Layout Wrapper */
         .page-container {
             min-height: 100vh;
             display: flex;
@@ -47,7 +46,6 @@
             padding: 2.5rem 1rem;
         }
 
-        /* Form Card */
         .form-card {
             width: 100%;
             max-width: 580px;
@@ -60,14 +58,12 @@
             transition: all 0.3s ease;
         }
 
-        /* Top decorative gradient bar */
         .top-gradient-bar {
             height: 6px;
-            background: linear-gradient(90deg, #0284c7, #0d9488, #3b82f6);
+            background: linear-gradient(90deg, #f59e0b, #0284c7, #0d9488);
             width: 100%;
         }
 
-        /* Floating Input Customization */
         .form-floating > .form-control {
             border: 1.5px solid #e2e8f0;
             border-radius: 0.85rem;
@@ -102,7 +98,6 @@
             font-weight: 600;
         }
 
-        /* Submit Button with Modern Transition & Hover Effect */
         .btn-submit-modern {
             background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
             color: #ffffff;
@@ -118,8 +113,6 @@
             gap: 0.5rem;
             box-shadow: 0 6px 18px rgba(13, 148, 136, 0.28);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
         }
 
         .btn-submit-modern:hover {
@@ -129,12 +122,6 @@
             box-shadow: 0 10px 25px rgba(13, 148, 136, 0.42);
         }
 
-        .btn-submit-modern:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
-        }
-
-        /* Cancel/Back Button */
         .btn-cancel-modern {
             border-radius: 0.85rem;
             border: 1.5px solid #e2e8f0;
@@ -177,12 +164,12 @@
                 <!-- Header Icon & Title -->
                 <div class="d-flex align-items-center gap-3 mb-4">
                     <div class="rounded-3 d-flex align-items-center justify-content-center text-white flex-shrink-0" 
-                         style="width: 50px; height: 50px; background: linear-gradient(135deg, #0284c7, #0d9488); box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);">
-                        <i class="bi bi-heart-pulse-fill fs-4"></i>
+                         style="width: 50px; height: 50px; background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 6px 16px rgba(245, 158, 11, 0.25);">
+                        <i class="bi bi-pencil-square fs-4"></i>
                     </div>
                     <div>
-                        <h4 class="fw-bold text-dark mb-1">Tambah Alat Medis</h4>
-                        <p class="text-muted small mb-0">Lengkapi data inventaris perangkat medis baru</p>
+                        <h4 class="fw-bold text-dark mb-1">Edit Alat Medis</h4>
+                        <p class="text-muted small mb-0">Perbarui rincian inventaris alat ID: ALK-{{ str_pad($alat->id, 4, '0', STR_PAD_LEFT) }}</p>
                     </div>
                 </div>
 
@@ -205,8 +192,9 @@
                 @endif
 
                 <!-- Form -->
-                <form action="{{ route('alat.store') }}" method="POST" autocomplete="off" novalidate>
+                <form action="{{ route('alat.update', $alat->id) }}" method="POST" autocomplete="off" novalidate>
                     @csrf
+                    @method('PUT')
 
                     <!-- Floating Label 1: Nama Alat -->
                     <div class="form-floating mb-3">
@@ -215,7 +203,7 @@
                                id="nama_alat" 
                                class="form-control @error('nama_alat') is-invalid @enderror" 
                                placeholder="Nama Alat Medis" 
-                               value="{{ old('nama_alat') }}" 
+                               value="{{ old('nama_alat', $alat->nama_alat) }}" 
                                required>
                         <label for="nama_alat">
                             <i class="bi bi-cpu text-primary me-1"></i> Nama Alat Medis
@@ -232,7 +220,7 @@
                                id="merek" 
                                class="form-control @error('merek') is-invalid @enderror" 
                                placeholder="Merek / Pabrikan" 
-                               value="{{ old('merek') }}" 
+                               value="{{ old('merek', $alat->merek) }}" 
                                required>
                         <label for="merek">
                             <i class="bi bi-tag text-primary me-1"></i> Merek / Pabrikan
@@ -251,7 +239,7 @@
                                placeholder="Tahun Pengadaan" 
                                min="1900" 
                                max="2099" 
-                               value="{{ old('tahun', date('Y')) }}" 
+                               value="{{ old('tahun', $alat->tahun) }}" 
                                required>
                         <label for="tahun">
                             <i class="bi bi-calendar-event text-primary me-1"></i> Tahun Pembuatan / Pengadaan
@@ -268,7 +256,7 @@
                                id="lokasi" 
                                class="form-control @error('lokasi') is-invalid @enderror" 
                                placeholder="Lokasi / Ruangan" 
-                               value="{{ old('lokasi') }}" 
+                               value="{{ old('lokasi', $alat->lokasi) }}" 
                                required>
                         <label for="lokasi">
                             <i class="bi bi-geo-alt text-primary me-1"></i> Lokasi / Ruangan
@@ -281,12 +269,12 @@
                     <!-- Action Buttons -->
                     <div class="d-flex align-items-center justify-content-between pt-2">
                         <a href="{{ route('alat.index') }}" class="btn-cancel-modern">
-                            <i class="bi bi-arrow-left"></i> Kembali
+                            <i class="bi bi-arrow-left"></i> Batal
                         </a>
 
                         <button type="submit" class="btn-submit-modern">
                             <i class="bi bi-check2-circle fs-5"></i>
-                            <span>Simpan Data</span>
+                            <span>Perbarui Data</span>
                         </button>
                     </div>
 
@@ -296,7 +284,7 @@
 
             <!-- Footer note inside card -->
             <div class="bg-light px-4 px-sm-5 py-3 border-top border-light d-flex align-items-center justify-content-between text-muted small">
-                <span><i class="bi bi-info-circle me-1 text-primary"></i> Semua kolom wajib diisi</span>
+                <span><i class="bi bi-info-circle me-1 text-primary"></i> Perubahan akan langsung tercatat</span>
                 <span>SIMRS Medika v1.0</span>
             </div>
         </div>
