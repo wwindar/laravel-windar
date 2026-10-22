@@ -259,9 +259,18 @@
             </div>
 
             <div class="d-flex align-items-center gap-2">
-                <span class="badge bg-secondary-subtle text-secondary rounded-pill px-3 py-2 fw-medium">
-                    <i class="bi bi-shield-check me-1 text-success"></i> Server Online
-                </span>
+                <a href="{{ url('/') }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-medium">
+                    <i class="bi bi-grid-fill me-1"></i> Portal
+                </a>
+                <a href="{{ url('/dashboard') }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-medium">
+                    <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                </a>
+                <a href="{{ url('/user/profile') }}" class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-medium">
+                    <i class="bi bi-person-circle me-1"></i> Profil
+                </a>
+                <a href="http://localhost:3000" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 fw-semibold">
+                    <i class="bi bi-box-arrow-up-right me-1"></i> Frontend Nuxt
+                </a>
             </div>
         </div>
     </header>
